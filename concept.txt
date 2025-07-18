@@ -1,0 +1,60 @@
+nodeJs
+
+
+what is node js ?
+
+        node js is a javascript runtime built using google opensource v8 js engine.
+
+        An environment to execute javascript using v8.
+
+** faster and scalable
+** have many usecases
+** one language for both frontend and backend
+** large open source library NPM
+==================================================================================================================================================================================
+
+REPL --> Read Eval Print Loop (allows us to execute statements in terminal)
+
+node modules : we use for additional features
+
+    ex :fs, http
+
+File system(fs) :
+
+        this module allows us to work with files.
+
+        reading : fs.readfileSync("./name.txt", 'UTF-8'); //if we does not specify "utf" , result will be in buffer
+
+        writing : fs.writeFileSync("./txt/output.txt", writeTxt);
+
+        ex : 
+            const fs = require("fs"); // returns an object
+
+            const text = fs.readFileSync("./txt/input.txt", "utf-8");
+
+            console.log(text);
+
+            const writeTxt = `what is nodejs? \n ${text}`;
+
+            fs.writeFileSync("./txt/output.txt", writeTxt);
+==================================================================================================================================================================================
+
+Reading and Writing Files Asynchronously: 
+
+         here, the fs will read or write content to the files in background without effecting the execution of further statements.
+
+         reading : fs.readFile('path','utf-8',(err,data)=>{});
+
+         writing :fs.writeFile('path',data,(err)={});
+
+         ex: 
+         const asyncText = fs.readFile("./txt/input.txt", "utf-8", (err, data) => {
+            console.log(data);
+            });
+
+            const data = "created using asynchronous writing";
+            fs.writeFile("./txt/output-async.txt", data, (err) => {
+            console.log("file has written successfully");
+            });
+
+==================================================================================================================================================================================
