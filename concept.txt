@@ -55,6 +55,6 @@ Reading and Writing Files Asynchronously:
             const data = "created using asynchronous writing";
             fs.writeFile("./txt/output-async.txt", data, (err) => {
             console.log("file has written successfully");
-            });
+            })
 
 ==================================================================================================================================================================================
