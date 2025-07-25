@@ -58,3 +58,159 @@ Reading and Writing Files Asynchronously:
             })
 
 ==================================================================================================================================================================================
+
+Creating a sample server :
+
+        'http' module allows us to create server and also to work with network.
+
+        creating :
+
+                const http = require("http");
+
+                const server = http.createServer((req, res) => {
+                res.end("hello from server...");
+                });
+
+                **when ever there is a request the call back passed is fired.
+                **req and res are the objects
+                **end is a simple methods to handle res
+
+        listening : 
+
+                server is listened at some address (locally - localhost['127.0.0.1:8000'])
+
+                server.listen(8000, "127.0.0.1", () => {
+                console.log("server is running at http://127.0.0.1:8000");
+                });
+
+==================================================================================================================================================================================
+
+routing: implementing diff actions to diff urls
+
+        ex :
+                const http = require("http");
+
+                const server = http.createServer((req, res) => {
+                // res.end("hello from server...");
+                // console.log(req.url);
+                res.writeHead(200, { "content-type": "text/html" });
+                const path = req.url;
+                if (path === "/cart") {
+                        res.end("<h1>this is the cart</h1>");
+                } else if (path === "/product") {
+                        res.end("<h1>from products</h1>");
+                } else {
+                        res.end("<h1>WelCome!</h1>");
+                }
+                });
+
+                server.listen(8000, "127.0.0.1", () => {
+                console.log("server is running at http://127.0.0.1:8000");
+                });
+
+==================================================================================================================================================================================
+url modeule :
+
+        allows us to work with urls.
+
+        parsing url :
+
+                        url.parse(req.url,true); //returns an object 
+
+external modeles :
+
+        **in nodeJs every single file is considered as a module.
+
+        We use npm to download the modules . 
+
+        NPM is a is a commapnd line app to install the opensource modules
+
+        **npm install, npm update, npm outdated, npm unistall, npm init(cofigures package.json).
+
+        **user defined modules (module.exports)
+
+        installing with version - npm install slugify@1.0.0
+
+        Types of modules :
+
+                dependencies : our code depends on these modules (npm i express)
+
+                devDependencies : provides tools for the development like debuggers , testing tools etc (npm install nodemon --save-dev)
+
+        **installing modules globally - npm i nodemon --global
+
+
+==================================================================================================================================================================================
+
+How the web works? 
+
+        client and server communicates on client server architecture (request response model).
+
+        client sends request to the server and the server prepare the response and send it to the client.
+
+        when client request with a url, DNS(domain naming server) give an actual url with ip and port and gives it to client.
+
+        client with the url from dns request the server.
+
+        here the TCP/IP connection is built between client and the server .
+
+        TCP/IP is a protocol that defines how the data is travelling across the connection.
+
+        HTTP - Hyper text transefer protocol - set of rules for the communication
+
+        Now client sends a http request to the server (header contains typeof method, resource path, http version, body).
+
+        Then server prepares the response for the request and sends it to client (header contains status code, body and other stuff).
+
+        API - Applicaton programming interface - it is a piece of software that can be used by another piece of software
+
+
+==================================================================================================================================================================================
+
+How the nodeJs works?
+
+        nodeJs architecture : v8 js engine + libuv (thread pool, event loop, allows node to access operating system, file system, http )
+
+        ** node is built using javascript and c++
+
+        process : It is a program in execution.
+
+        thread : sequence of instructions.
+
+        ** In node all the tasks will be executed on the single thread.
+
+        Event loop manages all these tasks.
+
+==================================================================================================================================================================================
+
+Event Loop :
+
+        **Event loop makes the javascript asynchronous.
+
+        It has 4 phases and the important phases are :
+
+                1) timers
+
+                2) i/o polling and callbacks
+
+        ** It has a call backqueue
+
+        And microtasks queue (for resolved promises) and PROCESS.nexttick() quueue (allow to execute tasks manually).
+
+        **And also it has a thread pool.
+
+        When ever the task is to big to execute, it is sent to the thread pool.
+
+        **After completing one cycle, the event loops chacks for any i/o , timers . so that it decides to run again or to stop execution
+
+        ** All the top level code is executed at first.
+
+        Syscronous instructions are not part of the eventloop. They block the code. 
+
+        **Micro tasks queue is more prior than callback queue.
+
+        **call back of setImmediate() is executed right after entering into the event loop.
+
+==================================================================================================================================================================================
+
+
