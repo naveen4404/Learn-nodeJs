@@ -195,17 +195,17 @@ Event Loop :
 
         ** It has a call backqueue
 
-        And microtasks queue (for resolved promises) and PROCESS.nexttick() quueue (allow to execute tasks manually).
+        And microtasks queue (for resolved promises) and PROCESS.nexttick() queue (allow to execute tasks manually).
 
         **And also it has a thread pool.
 
         When ever the task is to big to execute, it is sent to the thread pool.
 
-        **After completing one cycle, the event loops chacks for any i/o , timers . so that it decides to run again or to stop execution
+        **After completing one cycle, the event loops checks for any i/o , timers . so that it decides to run again or to stop execution
 
         ** All the top level code is executed at first.
 
-        Syscronous instructions are not part of the eventloop. They block the code. 
+        Syscronous instructions are not part of the eventloop. They block the code.
 
         **Micro tasks queue is more prior than callback queue.
 
@@ -213,4 +213,89 @@ Event Loop :
 
 ==================================================================================================================================================================================
 
+Event driven architecture :
 
+        EVENT EMITTER (emits events) ----->>  EVENT LISTENER(calls) ------>> ATTACHED CALLBACK
+
+        ex :
+
+                //WORKING WITH THE EVENTS
+
+                // usoing eventEmitter class
+
+                const EventEmitter = require("events");
+
+                //using class
+
+                class Sales extends EventEmitter {
+                        constructor() {
+                         super();
+                        }
+                }
+                const createdEvent = new EventEmitter();  //using the class directly without inheriting
+                const createdEvent = new Sales();
+                createdEvent.on("salesEvent", () => {
+                       console.log("new sale arrived");
+                });
+
+                createdEvent.on("salesEvent", () => {
+                       console.log("sale is going to end");
+                });
+
+                createdEvent.on("salesEvent", (stock) => {
+                       console.log(`only ${stock} items are left in stock`);
+                });
+
+
+                createdEvent.emit("salesEvent", 10);
+
+
+==================================================================================================================================================================================
+
+Streams :
+
+        Used to process(read or write) data piece by piece (chunks), without completing the whole read or write operation ,
+
+        and therefore without keeping all data un the memory.
+
+        types of streams :
+
+                readable streams : streams from with we can read.
+
+                writable streams : streams to which we acn write data.
+
+                duplex streams : both readable and writable.
+
+                transform streams : duplex and transforms (zlib Glib).
+
+
+        ex:
+
+                const fs = require("fs");
+                const http = require("http");
+
+                const server = http.createServer();
+
+                server.on("request", (req, res) => {
+                const readable = fs.createReadStream("./test-file.txt");
+
+                //   readable.on("data", (chunk) => {
+                //     res.write(chunk);
+                //   });
+
+                readable.pipe(res); //pipe is a method that maintains the relevance between speed of data coming in and going out
+
+                //   readable.on("end", () => {
+                //     res.end();
+                //   });
+                });
+
+                server.listen(8000, "127.0.0.1", () => {
+                console.log("listening on http://127.0.0.1:8000/");
+                });
+
+==================================================================================================================================================================================
+
+
+
+          
